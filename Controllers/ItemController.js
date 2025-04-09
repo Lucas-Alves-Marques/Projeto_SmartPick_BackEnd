@@ -2,8 +2,6 @@ import express from "express";
 import service from '../Service/itemService.js';
 
 
-
-
 const route = express.Router();
 
 // GET - Itens por categoria
