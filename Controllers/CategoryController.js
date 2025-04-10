@@ -14,6 +14,7 @@ route.get("/raffle/:id_raffle", async (request, response) => {
         }
 
         return response.status(200).send(categories);
+        
     } catch (error) {
         console.error("Erro no GET /raffle/:id_raffle", error);
         return response.status(500).send({ message: "Erro interno do servidor." });

@@ -1,0 +1,90 @@
+type: collection.insomnia.rest/5.0
+name: Scratch Pad
+meta:
+  id: wrk_scratchpad
+  created: 1729452118609
+  modified: 1729452118609
+collection:
+  - name: Raffle
+    meta:
+      id: fld_d056af48648d43dcbe598da06be29d86
+      created: 1744245866102
+      modified: 1744246732033
+      sortKey: -1744245870090
+    children:
+      - url: http://localhost:3000/api/raffle/listRaffle
+        name: ListRaflle
+        meta:
+          id: req_8c6ddb8f21f94217bdeb96010ec736e6
+          created: 1744245869990
+          modified: 1744246729673
+          isPrivate: false
+          sortKey: -1744246726821
+        method: GET
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:3000/api/raffle/createRaffle
+        name: New Request
+        meta:
+          id: req_c6277f81bea4489dad8daec8389e0701
+          created: 1744246725193
+          modified: 1744249717291
+          isPrivate: false
+          sortKey: -1744246726721
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"raffleTitle": "Teste de Titulo",
+            	"categories" : ["Categoria 1", "Categoria 2"],
+            	"items": {
+            		"Cat1_item1": "Item 1",
+            		"Cat1_item2": "Item 2",
+            		"Cat2_item1": "Item 1.2",
+            		"Cat2_item2": "Item 2.2"
+            	}
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.2
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1729452153228
+    modified: 1729452153228
+environments:
+  name: Base Environment
+  meta:
+    id: env_99d30891da4bdcebc63947a8fc17f076de878684
+    created: 1729452153153
+    modified: 1729452153153
+    isPrivate: false

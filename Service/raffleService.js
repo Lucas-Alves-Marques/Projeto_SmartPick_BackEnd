@@ -14,15 +14,19 @@ async function listRaffle(id_raffle) {
 
 }
 
-async function createRaffle(id_user, name) {
+async function createRaffle(name) {
 
-    const SQL = 'insert into raffle(id_user, name) values(? , ?);'
+    const SQL = 'insert into raffle(name) values(?);'
 
-    const conn = database.connectDB()
+    const conn = await database.connectDB()
 
-    await conn.query(SQL, [id_user, name])
-    
+    const [raffle] = await conn.query(SQL, [name])
+
+    conn.end();
+
+    return raffle.insertId;
+
 }
 
-export default{listRaffle}
+export default{listRaffle,createRaffle}
 

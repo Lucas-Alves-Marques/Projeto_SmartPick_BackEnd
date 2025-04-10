@@ -1,1 +1,0 @@
-# Projeto_SmartPick_BackEnd
