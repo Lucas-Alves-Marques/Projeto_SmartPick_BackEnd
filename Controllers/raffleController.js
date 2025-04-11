@@ -22,6 +22,8 @@ route.post("/createRaffle", async (request, response) => {
 
     const {raffleTitle, categories, items} = request.body
 
+    console.log(raffleTitle, categories, items)
+
     try {
 
         const ids_category = []
