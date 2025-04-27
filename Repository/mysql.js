@@ -13,8 +13,6 @@ async function connectDB() {
 
     });
 
-    console.log("Conectado ao MySQL");
-
   // }
 
   return global.connection;

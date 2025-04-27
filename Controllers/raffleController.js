@@ -5,22 +5,26 @@ import itemService from "../Service/itemService.js";
 
 const route = express.Router();
 
-route.get("/listRaffle", async (request, response) => {
+route.get("/listRaffleName", async (request, response) => {
 
-    try{
+    try {
 
-        return response.status(200).send({ message: `Ta indo` })
+         const raffle = await raffleService.listRaffle();
 
-    }catch(err){
-        return response.status(500).send({message : 'Erro ao se conectar'})
+        console.log(raffle)
+
+        return response.status(200).send({ message: raffle })
+
+    } catch (err) {
+        
+        return response.status(500).send({ message: 'Erro ao se conectar' })
     }
 })
 
 route.post("/createRaffle", async (request, response) => {
 
-    // const {raffleTitle, categories, items} = request.body
 
-    const {raffleTitle, categories, items} = request.body
+    const { raffleTitle, categories, items } = request.body
 
     console.log(raffleTitle, categories, items)
 
@@ -30,7 +34,7 @@ route.post("/createRaffle", async (request, response) => {
 
         const id_raffle = await raffleService.createRaffle(raffleTitle)
 
-        for (const categorie of categories){
+        for (const categorie of categories) {
 
             const id_category = await categoryService.createCategory(categorie, id_raffle)
 
@@ -38,7 +42,7 @@ route.post("/createRaffle", async (request, response) => {
         }
 
 
-        for (const [key, value] of Object.entries(items)){
+        for (const [key, value] of Object.entries(items)) {
 
             const id_category = key.includes("Cat1") ? ids_category[0] : ids_category[1];
 
@@ -47,13 +51,7 @@ route.post("/createRaffle", async (request, response) => {
             await itemService.createItem(value, id_category);
         }
 
-        return response.status(200).send({message : `Tá funcionando muleke`})
-
-        // items.forEach(a => {
-
-        //     await
-
-        // })
+        return response.status(200).send({ message: `Tá funcionando muleke` })
 
 
     } catch (err) {
@@ -62,18 +60,6 @@ route.post("/createRaffle", async (request, response) => {
         return response.status(500).send({ message: "erro ao inserir item" })
 
     }
-
-    // try {
-
-    //     return response.status(200).send({ message: raffleTitle, categories, items})
-
-    // }catch (err) {
-
-    //     return response.status(500).send({message : 'Erro ao se conectar'})
-
-    // }
-
-
 
 })
 
