@@ -8,7 +8,7 @@ async function connectDB() {
 
       host: 'localhost',
       user: 'root',
-      password: '',
+      password: 'etecembu@123',
       database: 'smart_pick'
 
     });
