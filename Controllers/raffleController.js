@@ -9,7 +9,7 @@ route.get("/listRaffleName", async (request, response) => {
 
     try {
 
-         const raffle = await raffleService.listRaffle();
+         const raffle = await raffleService.listRaffleName();
 
         console.log(raffle)
 
@@ -62,5 +62,7 @@ route.post("/createRaffle", async (request, response) => {
     }
 
 })
+
+
 
 export default route;

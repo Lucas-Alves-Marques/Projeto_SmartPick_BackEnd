@@ -20,9 +20,7 @@
  drop table user;
  
  */
- 
- 
- 
+
  create table raffle(
 	id_raffle 	int auto_increment,
     #id_user		int,
@@ -36,10 +34,9 @@
 
 insert into raffle(name) values(1, 'Sorteio Test');
 
-select * from raffle;
+select name from raffle where id_raffle = 1;
   
 drop table raffle;
-
 
 create table category(
 
@@ -53,7 +50,7 @@ create table category(
 
 insert into category(title, id_raflle) values ('Categoria Teste', 1);
 
-select * from category;
+select * from category where id_raffle = 1;
 
 drop table category;
 

@@ -15,5 +15,17 @@ async function createCategory(title, id_raffle) {
     return category.insertId;
 }
 
+async function listCategory(id_raffle) {
 
-export default { createCategory};
+    const sql = "select name from raffle where id_raffle = ?";
+
+    const conn = await database.connectDB();
+
+    const [rows] = await conn.query(sql, id_raffle);
+
+    conn.end();
+
+    return rows;
+}
+
+export default { createCategory };
