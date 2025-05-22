@@ -17,15 +17,15 @@ async function createCategory(title, id_raffle) {
 
 async function listCategory(id_raffle) {
 
-    const sql = "select name from raffle where id_raffle = ?";
+    const SQL = "select title, id_category from category where id_raffle = ?;";
 
     const conn = await database.connectDB();
 
-    const [rows] = await conn.query(sql, id_raffle);
+    const [rows] = await conn.query(SQL, id_raffle);
 
     conn.end();
 
     return rows;
 }
 
-export default { createCategory };
+export default { createCategory, listCategory };

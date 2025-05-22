@@ -43,3 +43,4 @@ async function getRaffle(id_raffle) {
 
 export default { listRaffleName, createRaffle, getRaffle }
 
+

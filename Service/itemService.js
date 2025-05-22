@@ -13,5 +13,40 @@ async function createItem(name, id_category) {
     conn.end();
 }
 
+async function listItems(id_category1, id_category2) {
 
-export default {createItem};
+    if (id_category2) {
+
+        const SQL = "select id_category, name from items where id_category = ? or id_category = ?";
+
+        const ids = [id_category1, id_category2]
+
+        const conn = await database.connectDB();
+
+        const [rows] = await conn.query(SQL, ids);
+
+        conn.end();
+
+        return rows;
+    }
+
+    else {
+
+        const SQL = "select id_category, name from items where id_category = ? ";
+
+        const conn = await database.connectDB();
+
+        const [rows] = await conn.query(SQL, id_category1);
+
+        conn.end();
+
+        return rows;
+
+    }
+
+
+
+}
+
+
+export default { createItem, listItems };

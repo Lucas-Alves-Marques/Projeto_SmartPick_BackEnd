@@ -34,7 +34,9 @@
 
 insert into raffle(name) values(1, 'Sorteio Test');
 
-select name from raffle where id_raffle = 1;
+select * from raffle;
+
+select name from raffle where id_raffle = "1";
   
 drop table raffle;
 
@@ -50,10 +52,11 @@ create table category(
 
 insert into category(title, id_raflle) values ('Categoria Teste', 1);
 
-select * from category where id_raffle = 1;
+select * from category;
+
+select title, id_category from category where id_raffle = 2;
 
 drop table category;
-
 
 create table items(
 	id_item			int auto_increment,
@@ -71,8 +74,7 @@ insert into items(id_raffle, id_category, name) values(1, 1, '2 item teste');
 
 select * from items;
 
+select id_category, name from items where id_category = 1 or id_category = 2;
+
 drop table items;
 
-SELECT raffle.name AS raffle, category.title AS category, items.name AS item FROM items 
-INNER JOIN category ON category.id_category = items.id_category 
-INNER JOIN raffle ON raffle.id_raffle = category.id_raffle;

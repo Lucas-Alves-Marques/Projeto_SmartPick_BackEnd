@@ -1,4 +1,4 @@
-import express from "express";
+import express, { request, response } from "express";
 import raffleService from '../Service/raffleService.js'
 import categoryService from "../Service/categoryService.js";
 import itemService from "../Service/itemService.js";
@@ -9,14 +9,12 @@ route.get("/listRaffleName", async (request, response) => {
 
     try {
 
-         const raffle = await raffleService.listRaffleName();
-
-        console.log(raffle)
+        const raffle = await raffleService.listRaffleName();
 
         return response.status(200).send({ message: raffle })
 
     } catch (err) {
-        
+
         return response.status(500).send({ message: 'Erro ao se conectar' })
     }
 })
@@ -25,8 +23,6 @@ route.post("/createRaffle", async (request, response) => {
 
 
     const { raffleTitle, categories, items } = request.body
-
-    console.log(raffleTitle, categories, items)
 
     try {
 
@@ -46,7 +42,7 @@ route.post("/createRaffle", async (request, response) => {
 
             const id_category = key.includes("Cat1") ? ids_category[0] : ids_category[1];
 
-            console.log(`Cadastrando item "${value}" na categoria ID ${id_category}`);
+            // console.log(`Cadastrando item "${value}" na categoria ID ${id_category}`);
 
             await itemService.createItem(value, id_category);
         }
@@ -63,6 +59,56 @@ route.post("/createRaffle", async (request, response) => {
 
 })
 
+route.get("/listRaffle/:id_raffle", async (request, response) => {
 
+    try {
+
+        const { id_raffle } = request.params;
+
+        const data_raffle = {
+
+            title: null,
+            categories: {},
+            items: {}
+
+        };
+
+        async function listRaffle() {
+
+            const title_raffle = await raffleService.getRaffle(id_raffle);
+
+            data_raffle.title = title_raffle[0].name;
+
+            const categories_raffle = await categoryService.listCategory(id_raffle);
+
+            const id_cat = [];
+
+            await categories_raffle.forEach((cat) => {
+
+                data_raffle.categories[cat.title] = cat.id_category
+
+                id_cat.push(cat.id_category);
+
+            });
+
+            const items_raffle = await itemService.listItems(id_cat[0], id_cat[1]);
+
+            data_raffle.items = items_raffle;
+
+        }
+
+        await listRaffle()
+
+        return response.status(200).send({ message: data_raffle })
+
+
+    }
+    catch (err) {
+
+        return response.status(500).send({ message: err })
+    }
+
+
+})
 
 export default route;
