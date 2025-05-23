@@ -17,7 +17,7 @@ async function listItems(id_category1, id_category2) {
 
     if (id_category2) {
 
-        const SQL = "select id_category, name from items where id_category = ? or id_category = ?";
+        const SQL = "select * from items where id_category = ? or id_category = ?";
 
         const ids = [id_category1, id_category2]
 
