@@ -85,7 +85,7 @@ route.get("/listRaffle/:id_raffle", async (request, response) => {
 
             await categories_raffle.forEach((cat) => {
 
-                data_raffle.categories[cat.title] = cat.id_category
+                data_raffle.categories[cat.id_category] = cat.title
 
                 id_cat.push(cat.id_category);
 

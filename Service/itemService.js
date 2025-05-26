@@ -32,7 +32,7 @@ async function listItems(id_category1, id_category2) {
 
     else {
 
-        const SQL = "select id_category, name from items where id_category = ? ";
+        const SQL = "select * from items where id_category = ? ";
 
         const conn = await database.connectDB();
 
