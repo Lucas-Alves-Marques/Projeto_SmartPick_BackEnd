@@ -111,4 +111,42 @@ route.get("/listRaffle/:id_raffle", async (request, response) => {
 
 })
 
+route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
+
+    const { id_raffle } = request.params;
+
+    const { raffleTitle, categories, items } = request.body
+
+    try {
+
+        // console.log(categories)
+
+        await raffleService.updateNameRaffle(raffleTitle , id_raffle)
+
+        Object.entries(categories).map(async (cat) =>{
+
+            if(cat[1] == ' ' || cat[1] == ''){
+
+               await categoryService.deleteCategory(cat[0])
+
+            }
+
+            else{
+
+                 await categoryService.updateCategory(cat[1], cat[0])
+            }
+
+        })
+
+        return response.status(200).send({ message: `Sorteio Atualizado`})
+
+    } catch (err) {
+
+        console.log(err)
+
+
+    }
+
+})
+
 export default route;

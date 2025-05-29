@@ -13,6 +13,8 @@ async function createItem(name, id_category) {
     conn.end();
 }
 
+// GET
+
 async function listItems(id_category1, id_category2) {
 
     if (id_category2) {
@@ -48,5 +50,33 @@ async function listItems(id_category1, id_category2) {
 
 }
 
+// PUT
 
-export default { createItem, listItems };
+async function updateItem(name, id) {
+
+    const SQL = 'update items set name = ? where id_item = ?';
+
+    const body = [name, id]
+
+    const conn = await database.connectDB();
+
+    await conn.query(SQL, body)
+
+    conn.end
+}
+
+// DELETE
+
+async function deleteItem(id) {
+
+    const SQL = 'delete from items where id_item = ?';
+
+    const conn = await database.connectDB();
+
+    await conn.query(SQL, id)
+
+    conn.end
+}
+
+
+export default { createItem, listItems, updateItem, deleteItem };

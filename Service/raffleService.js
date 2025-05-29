@@ -1,5 +1,7 @@
 import database from '../Repository/mysql.js';
 
+//GET
+
 async function listRaffleName() {
 
     const sql = "select * from raffle";
@@ -13,6 +15,8 @@ async function listRaffleName() {
     return rows;
 
 }
+
+// POST
 
 async function createRaffle(name) {
 
@@ -28,6 +32,8 @@ async function createRaffle(name) {
 
 }
 
+// GET RAFFLE
+
 async function getRaffle(id_raffle) {
 
     const sql = "select name from raffle where id_raffle = ?";
@@ -41,6 +47,34 @@ async function getRaffle(id_raffle) {
     return rows;
 }
 
-export default { listRaffleName, createRaffle, getRaffle }
+// PUT RAFFLE
+
+async function updateNameRaffle(name, id) {
+    
+    const SQL = 'update raffle set name = ? where id_raffle = ?';
+
+    const body = [name, id]
+
+    const conn = await database.connectDB();
+
+    await conn.query(SQL, body)
+
+    conn.end
+}
+
+// DELETE
+
+async function deleteRaffle(id) {
+
+        const SQL = 'delete from raffle where id_raffle = ?';
+    
+        const conn = await database.connectDB();
+    
+        await conn.query(SQL, id)
+    
+        conn.end
+}
+
+export default { listRaffleName, createRaffle, getRaffle, updateNameRaffle, deleteRaffle }
 
 
