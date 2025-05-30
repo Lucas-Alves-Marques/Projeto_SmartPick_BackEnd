@@ -119,26 +119,42 @@ route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
 
     try {
 
-        // console.log(categories)
+        console.log(items)
 
-        await raffleService.updateNameRaffle(raffleTitle , id_raffle)
+        await raffleService.updateNameRaffle(raffleTitle, id_raffle)
 
-        Object.entries(categories).map(async (cat) =>{
+        Object.entries(categories).map(async (cat) => {
 
-            if(cat[1] == ' ' || cat[1] == ''){
+            if (cat[1] == ' ') {
 
-               await categoryService.deleteCategory(cat[0])
+                await items.map((item)=>{
+
+                    if(item.id_category == cat[0]){
+
+                        console.log(item.id_item)
+
+                       itemService.deleteItem(item.id_item)
+
+                    }
+
+                })
+
+                await categoryService.deleteCategory(parseInt(cat[0]))
 
             }
 
-            else{
+            else {
 
-                 await categoryService.updateCategory(cat[1], cat[0])
+                await categoryService.updateCategory(cat[1], cat[0])
             }
+
+
 
         })
 
-        return response.status(200).send({ message: `Sorteio Atualizado`})
+        return response.status(200).send({ message: `Sorteio Atualizado` })
+
+
 
     } catch (err) {
 
