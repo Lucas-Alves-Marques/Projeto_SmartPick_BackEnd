@@ -15,7 +15,7 @@ route.get("/listRaffleName", async (request, response) => {
 
     } catch (err) {
 
-        return response.status(500).send({ message: 'Erro ao se conectar' })
+        return response.status(500).send({ message: err })
     }
 })
 
@@ -53,7 +53,8 @@ route.post("/createRaffle", async (request, response) => {
     } catch (err) {
 
         console.log(err)
-        return response.status(500).send({ message: "erro ao inserir item" })
+
+        return response.status(500).send({ message: err })
 
     }
 
@@ -117,48 +118,82 @@ route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
 
     const { raffleTitle, categories, items } = request.body
 
-    try {
+    // console.log(id_raffle)
+    // console.log(raffleTitle)
+    // console.log(categories)
+    // console.log(items)
 
-        console.log(items)
+    try {
 
         await raffleService.updateNameRaffle(raffleTitle, id_raffle)
 
-        Object.entries(categories).map(async (cat) => {
+        let idNewCategory = 0;
 
-            if (cat[1] == ' ') {
+        for (const [key, value] of Object.entries(categories)) {
 
-                await items.map((item)=>{
+            if (key === "NewCategory") {
 
-                    if(item.id_category == cat[0]){
+                const id_cat = await categoryService.createCategory(value, id_raffle);
 
-                        console.log(item.id_item)
+                idNewCategory = id_cat; 
 
-                       itemService.deleteItem(item.id_item)
+            } else if (value === "DeleteCat") {
 
-                    }
+                await itemService.deleteItemFromCategory(key);
 
-                })
+                await categoryService.deleteCategory(key);
 
-                await categoryService.deleteCategory(parseInt(cat[0]))
+            } else {
 
+                await categoryService.updateCategory(value, key);
+                
+            }
+        }
+
+        console.log(idNewCategory)
+
+        for (const item of items) {
+
+            if (String(item.id_item).includes('NewItem')) {
+
+                if (item.id_category == 'NewCategory') {
+
+                    console.log(idNewCategory)
+
+                    await itemService.createItem(item.name, idNewCategory)
+
+                }
+
+                else {
+
+                    console.log('Primeiro else')
+
+                    await itemService.createItem(item.name, item.id_category)
+                }
+
+
+            }
+
+            else if (item.name == 'deleteItem') {
+
+                await itemService.deleteItem(item.id_item)
             }
 
             else {
 
-                await categoryService.updateCategory(cat[1], cat[0])
+                await itemService.updateItem(item.name, item.id_item)
+
             }
 
 
-
-        })
+        }
 
         return response.status(200).send({ message: `Sorteio Atualizado` })
 
 
-
     } catch (err) {
 
-        console.log(err)
+        return response.status(500).send({ message: err })
 
 
     }

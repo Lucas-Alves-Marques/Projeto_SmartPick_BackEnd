@@ -65,6 +65,18 @@ async function updateItem(name, id) {
     conn.end
 }
 
+// DELETE FROM CATEGORY
+
+async function deleteItemFromCategory(id_cat) {
+
+    const SQL = 'delete from items where id_category = ?';
+
+    const conn = await database.connectDB();
+
+    await conn.query(SQL, id_cat)
+    
+}
+
 // DELETE
 
 async function deleteItem(id) {
@@ -79,4 +91,4 @@ async function deleteItem(id) {
 }
 
 
-export default { createItem, listItems, updateItem, deleteItem };
+export default { createItem, listItems, updateItem, deleteItemFromCategory ,deleteItem };
