@@ -135,7 +135,7 @@ route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
 
                 const id_cat = await categoryService.createCategory(value, id_raffle);
 
-                idNewCategory = id_cat; 
+                idNewCategory = id_cat;
 
             } else if (value === "DeleteCat") {
 
@@ -146,7 +146,7 @@ route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
             } else {
 
                 await categoryService.updateCategory(value, key);
-                
+
             }
         }
 
@@ -195,6 +195,49 @@ route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
 
         return response.status(500).send({ message: err })
 
+
+    }
+
+})
+
+route.delete("/deleteRaffle/:id_raffle", async (request, response) => {
+
+    const { id_raffle } = request.params;
+
+    // console.log(id_raffle)
+
+    try {
+
+        if (id_raffle) {
+
+            const ids_cat = []
+
+            const ids = await categoryService.listCategory(id_raffle)
+
+            for (const cat of ids) {
+
+                ids_cat.push(cat.id_category)
+
+            }
+
+            for (const id of ids_cat){
+
+                await itemService.deleteItemFromCategory(id)
+
+                await categoryService.deleteCategory(id)
+
+            }
+
+            await raffleService.deleteRaffle(id_raffle)
+
+        }
+
+
+        // return response.status(200).send({ message: id_raffle })
+
+    } catch (err) {
+
+        return response.status(500).send({ message: err })
 
     }
 
