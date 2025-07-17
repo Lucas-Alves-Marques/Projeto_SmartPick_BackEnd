@@ -2,19 +2,14 @@ import mysql from 'mysql2/promise';
 
 async function connectDB() {
 
-  // if (!global.connection) {
+  global.connection = await mysql.createConnection({
 
-    global.connection = await mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: '',
+    database: 'smart_pick'
 
-      host: 'localhost',
-      user: 'root',
-      password: 'etecembu@123',
-      // password: '',
-      database: 'smart_pick'
-
-    });
-
-  // }
+  });
 
   return global.connection;
 
