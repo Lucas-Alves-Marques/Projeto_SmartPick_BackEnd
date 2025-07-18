@@ -42,8 +42,6 @@ route.post("/createRaffle", async (request, response) => {
 
             const id_category = key.includes("Cat1") ? ids_category[0] : ids_category[1];
 
-            // console.log(`Cadastrando item "${value}" na categoria ID ${id_category}`);
-
             await itemService.createItem(value, id_category);
         }
 
@@ -118,11 +116,6 @@ route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
 
     const { raffleTitle, categories, items } = request.body
 
-    // console.log(id_raffle)
-    // console.log(raffleTitle)
-    // console.log(categories)
-    // console.log(items)
-
     try {
 
         await raffleService.updateNameRaffle(raffleTitle, id_raffle)
@@ -150,23 +143,17 @@ route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
             }
         }
 
-        console.log(idNewCategory)
-
         for (const item of items) {
 
             if (String(item.id_item).includes('NewItem')) {
 
                 if (item.id_category == 'NewCategory') {
 
-                    console.log(idNewCategory)
-
                     await itemService.createItem(item.name, idNewCategory)
 
                 }
 
                 else {
-
-                    console.log('Primeiro else')
 
                     await itemService.createItem(item.name, item.id_category)
                 }
@@ -203,8 +190,6 @@ route.put("/uptadeRaffle/:id_raffle", async (request, response) => {
 route.delete("/deleteRaffle/:id_raffle", async (request, response) => {
 
     const { id_raffle } = request.params;
-
-    // console.log(id_raffle)
 
     try {
 
